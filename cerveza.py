@@ -1,0 +1,1 @@
+print("El nombre de tu cerbeza es: " + input("Dime tu color favorito en ingles: ") + " " + input("Dime tu animal favorito: "))
