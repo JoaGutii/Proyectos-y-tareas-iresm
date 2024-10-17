@@ -2,11 +2,11 @@ Algoritmo ParcialAlgoritmosYEstructurasDeDatos
 	definir i, vector, n, valor_ingresado Como Entero
 	Escribir "Por favor ingrese la cantidad de numeros que va a utilizar. "
 	leer n
+	dimension vector[n]
 	valor_ingresado = 0
 	suma_todo = 0
-	num_menor = 10000000000
-	num_mayor = -10000000000
-	dimension vector[n]
+	num_menor = 9999999999999
+	num_mayor = n
 	Para i = 1 hasta n con paso 1 Hacer
 		Escribir "Ingrese un valor: "
 		leer valor_ingresado
@@ -32,3 +32,4 @@ Algoritmo ParcialAlgoritmosYEstructurasDeDatos
 	FinPara
 	escribir "La suma del vector es de: ", suma_todo
 FinAlgoritmo
+
