@@ -15,19 +15,13 @@ from pathlib import Path
 
 lista_categoria = ['Carnes','Ensaladas','Pastas','Postres']
 
-lista_recetas = {'1' : 'Entrecot al Malbec , Matambre a la Pizza', '2' : 'Ensalada Griega , Ensalada Mediterranea', '3' : 'Canelones de Espinaca , Ravioles de Ricotta', '4' : 'Compota de Manzana , Tarta de Frambuesa'}
+diccionario_recetas = {1 : 'Entrecot al Malbec , Matambre a la Pizza', 2 : 'Ensalada Griega , Ensalada Mediterranea', 3 : 'Canelones de Espinaca , Ravioles de Ricotta', 4 : 'Compota de Manzana , Tarta de Frambuesa'}
 
 base = os.getcwd()
 print(base)
-def categorias_recetas():
-        return """
-    Categorias:
-    1. Carnes.
-    2. Ensaladas.
-    3. Pastas.
-    4. Postres.
-                  """
 
+def categorias_recetas():
+    return "\n".join(lista_categoria)
 categorias = categorias_recetas()
 
 def open_archivos(archivo, categoria):
@@ -38,98 +32,88 @@ def agregar_receta(categoria, nueva_receta):
      with open(f'Recetas/{categoria}/{nueva_receta}.txt', 'a') as receta:
         return receta.write(nueva_receta)
 
+def punto1(respuesta_opcion1):
+
+    if respuesta_opcion1 in lista_categoria:
+        print(diccionario_recetas[lista_categoria.index(respuesta_opcion1) + 1])
+        receta = input("Ingrese el nombre de la receta que desea leer: ")
+        print(open_archivos(receta, respuesta_opcion1))
+    else:
+        print("Opción no válida.")
+
+def punto2(respuesta_opcion):
+    a = 0
+    nueva_receta = input('Ingrese el nombre de la nueva receta: ')
+    agregar_receta(respuesta_opcion, nueva_receta)
+    contenido_nueva_receta = input(" Ingrese el contenido de la receta. ")
+    with open(f'Recetas/{respuesta_opcion}/{nueva_receta}.txt', 'a') as cont_nueva_receta:
+        cont_nueva_receta.write(': ')
+        cont_nueva_receta.write(contenido_nueva_receta)
+    print(f"Receta '{nueva_receta}' agregada a la categoría Carnes.")
+    if respuesta_opcion == "Carnes":
+        a = 1
+    elif respuesta_opcion == "Ensaladas":
+        a = 2
+    elif respuesta_opcion == "Pastas":
+        a = 3
+    elif respuesta_opcion == "Postres":
+        a = 4
+    diccionario_recetas[a] = diccionario_recetas[a] + " , " + nueva_receta
+    return diccionario_recetas
+
+def punto4(respuesta_opcion4):
+    if respuesta_opcion4 in lista_categoria:
+        print(diccionario_recetas[lista_categoria.index(respuesta_opcion4) + 1])
+        receta = input("Ingrese el nombre de la receta que desea eliminar: ")
+        os.remove(f'Recetas/{respuesta_opcion1}/{receta}.txt')
+    else:
+        print("Opción no válida.")
+
+def mensaje1():
+    return "Debe ingresar el nombre de la categoria tal cual como aparece arriba: "
+mensaje = mensaje1()
+
 print("Este es un catalogo de recetas de cocina, dada las siguientes opciones ingrese el numero adecuado para llevar a cavo la funcion que necesite.")
 
 while True:
         
         print("""
-    1. Elegir categoria, recetas para leer.
-    2. Agregar receta en una categoria.
-    3. Crear categoria.
-    4. Elegir categoria y eliminar una receta de la misma.
-    5. Eliminar categoria.
+    1. Elegir categoría para leer recetas.
+    2. Agregar receta en una categoría.
+    3. Crear categoría.
+    4. Eliminar receta de una categoría.
+    5. Eliminar categoría.
     6. Finalizar.
     """)
         respuesta = input("Ingrese la opcion que desee: ")
+        print()
+        contador = 0
+
         if respuesta == '1':
             print("Elija la categoria")
-            respuesta_opcion1 = input(categorias)
-            if respuesta_opcion1 == '1':
-                print("""
-    1. Entrecot al Malbec.
-    2. Matambre a la Pizza.
-                     """)
-                respuesta_opcion11 = input("Ingrese la opcion que desee: ")
-                if respuesta_opcion11 == '1': 
-                    print(open_archivos('Entrecot al Malbec', 'Carnes'))
-                elif respuesta_opcion11 == '2': 
-                     print(open_archivos('Matambre a la Pizza', 'Carnes'))
-            elif respuesta_opcion1 == '2':
-                print("""
-    1. Ensalada Griega.
-    2. Ensalada Mediterranea.
-                     """)
-                respuesta_opcion12 = input("Ingrese la opcion que desee: ")
-                if respuesta_opcion12 == '1': 
-                    print(open_archivos('Ensalada Griega', 'Ensaladas'))
-                elif respuesta_opcion12 == '2': 
-                    print(open_archivos('Ensalada Mediterranea', 'Ensaladas'))
-            elif respuesta_opcion1 == '3':
-                print("""
-    1. Canelones de Espinaca.
-    2. Ravioles de Ricotta.
-                     """)
-                respuesta_opcion13 = input("Ingrese la opcion que desee: ")
-                if respuesta_opcion13 == '1': 
-                    print(open_archivos('Canelones de Espinaca', 'Pastas'))
-                elif respuesta_opcion13 == '2': 
-                     print(open_archivos('Ravioles de Ricotta', 'Pastas'))
-            elif respuesta_opcion1 == '4':
-                print("""
-    1. Compota de Manzana.
-    2. Tarta de Frambuesa.
-                 """)
-                respuesta_opcion14 = input("Ingrese la opcion que desee: ")
-                if respuesta_opcion14 == '1': 
-                    print(open_archivos('Compota de Manzana', 'Postres'))
-                elif respuesta_opcion14 == '2': 
-                     print(open_archivos('Tarta de Frambuesa', 'Postres'))
+            
+            while contador != 1:
+                respuesta_opcion1 = input(f"{categorias}\n{mensaje} \nIngrese su respuesta: " )
+                if respuesta_opcion1 in categorias:
+                    punto1(respuesta_opcion1)
+                    contador += 1
+                else: 
+                    print()
+                    print("Ingresaste mal la categoria, vuelve a intentarlo: ")
+                    print()
+
 
         elif respuesta == '2':
             print("Elija la categoria: ")
-            respuesta_opcion2 = input(categorias)
-            if respuesta_opcion2 == '1':       
-                nueva_receta = input('Ingrese el nombre de la nueva receta: ')
-                agregar_receta('Carnes', nueva_receta)
-                print(f"Receta '{nueva_receta}' agregada a la categoría Carnes.")
-                contenido_nueva_receta = input(" Ingrese el contenido de la receta. ")
-                with open(f'Recetas/Carnes/{nueva_receta}.txt', 'a') as cont_nueva_receta:
-                    cont_nueva_receta.write(': ')
-                    cont_nueva_receta.write(contenido_nueva_receta)
-            elif respuesta_opcion2 == '2':
-                nueva_receta = input('Ingrese el nombre de la nueva receta: ')
-                agregar_receta('Ensaladas',nueva_receta)
-                print(f"Receta '{nueva_receta}' agregada a la categoría Ensaladas.")
-                contenido_nueva_receta = input(" Ingrese el contenido de la receta. ")
-                with open(f'Recetas/Ensaladas/{nueva_receta}.txt', 'a') as cont_nueva_receta:
-                    cont_nueva_receta.write(': ')
-                    cont_nueva_receta.write(contenido_nueva_receta)
-            elif respuesta_opcion2 == '3':
-                nueva_receta = input('Ingrese el nombre de la nueva receta: ')
-                agregar_receta('Pastas',nueva_receta)
-                print(f"Receta '{nueva_receta}' agregada a la categoría Pastas.")
-                contenido_nueva_receta = input(" Ingrese el contenido de la receta. ")
-                with open(f'Recetas/Pastas/{nueva_receta}.txt', 'a') as cont_nueva_receta:
-                    cont_nueva_receta.write(': ')
-                    cont_nueva_receta.write(contenido_nueva_receta)
-            elif respuesta_opcion2 == '4':
-                nueva_receta = input('Ingrese el nombre de la nueva receta: ')
-                agregar_receta('Postres',nueva_receta)
-                print(f"Receta '{nueva_receta}' agregada a la categoría Postres.")
-                contenido_nueva_receta = input(" Ingrese el contenido de la receta. ")
-                with open(f'Recetas/Postres/{nueva_receta}.txt', 'a') as cont_nueva_receta:
-                    cont_nueva_receta.write(': ')
-                    cont_nueva_receta.write(contenido_nueva_receta)
+            while contador != 1:
+                respuesta_opcion2 = input(f"{categorias}\n{mensaje} \nIngrese su respuesta: " )
+                if respuesta_opcion2 in categorias:
+                    punto2(respuesta_opcion2)
+                    contador += 1
+                else: 
+                    print()
+                    print("Ingresaste mal la categoria, vuelve a intentarlo: ")
+                    print()
 
         elif respuesta == '3':
             respuesta_opcion3 = input("Ingrese el nombre de la categoria que desea crear: ")
@@ -137,61 +121,26 @@ while True:
             lista_categoria.append(respuesta_opcion3)
             os.makedirs(ruta_categoria)
 
+
         elif respuesta == '4':
             print("Elija la categoria")
-            respuesta_opcion1 = input(categorias)
+            while contador != 1:
+                respuesta_opcion4 = input(f"{categorias}\n{mensaje} \nIngrese su respuesta: " )
+                if respuesta_opcion4 in categorias:
+                    punto4(respuesta_opcion4)
+                    print(f"La receta a sido eliminada de la categoría Carnes.")
+                    contador += 1
+                else: 
+                    print()
+                    print("Ingresaste mal la categoria, vuelve a intentarlo: ")
+                    print()
 
-
-            if respuesta_opcion1 == '1':
-                print("""
-    Elige el archivo a eliminar: 
-    1. Entrecot al Malbec.
-    2. Matambre a la Pizza.
-                     """)
-                respuesta_opcion11 = input("Ingrese la opcion que desee: ")
-                if respuesta_opcion11 == '1': 
-                    os.remove('Entrecot al Malbec.txt')
-                elif respuesta_opcion11 == '2': 
-                     os.remove('Matambre a la Pizza.txt')
-            elif respuesta_opcion1 == '2':
-                print("""
-    Elige el archivo a eliminar: 
-    1. Ensalada Griega.
-    2. Ensalada Mediterranea.
-                     """)
-                respuesta_opcion12 = input("Ingrese la opcion que desee: ")
-                if respuesta_opcion12 == '1': 
-                    os.remove('Ensalada Griega.txt')
-                elif respuesta_opcion12 == '2': 
-                    os.remove('Ensalada Mediterranea.txt')
-            elif respuesta_opcion1 == '3':
-                print("""
-    Elige el archivo a eliminar: 
-    1. Canelones de Espinaca.
-    2. Ravioles de Ricotta.
-                     """)
-                respuesta_opcion13 = input("Ingrese la opcion que desee: ")
-                if respuesta_opcion13 == '1': 
-                     os.remove('Canelones de Espinaca.txt')
-                elif respuesta_opcion13 == '2': 
-                     os.remove('Ravioles de Ricotta.txt')
-            elif respuesta_opcion1 == '4':
-                print("""
-    Elige el archivo a eliminar: 
-    1. Compota de Manzana.
-    2. Tarta de Frambuesa.
-                 """)
-                respuesta_opcion14 = input("Ingrese la opcion que desee: ")
-                if respuesta_opcion14 == '1': 
-                     os.remove('Compota de Manzana.txt')
-                elif respuesta_opcion14 == '2': 
-                     os.remove('Tarta de Frambuesa.txt')
 
         elif respuesta == '5':
             print("La lista de categorias a eliminar es: ")
             print(", ".join(lista_categoria))
             print("")
-            respuesta_opcion3 = input("Ingrese la categoria que desea eliminar: ")
+            respuesta_opcion3 = input("Ingrese la categoria que desea eliminar tal cual como aparece arriba: ")
 
             ruta_categoria = f'Recetas/{respuesta_opcion3}'
             os.rmdir(ruta_categoria) 
