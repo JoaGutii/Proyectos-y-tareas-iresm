@@ -425,21 +425,21 @@ print(Nieto.mro())
 # Completa el código suministrado a continuación para lograrlo
 
 class Padre():
+    def trabajar(self):
+        print("Trabajando en el Hospital")
+
     def reir(self):
-        return print("JA JA JA")
-mi_padre=Padre()
-#mi_padre.reir()
+        print("Ja ja ja!")
 
 class Madre():
-    def __init__(self, vocacion):
-        self.vocacion = vocacion
-#mi_madre = Madre("Fiscalia")
-
-class Hija(Padre, Madre):
+    def trabajar(self):
+        print("Trabajando en la Fiscalía")
+        
+class Hija(Madre, Padre):
     pass
-mi_hija = Hija("Fiscalia")
+mi_hija = Hija()
 mi_hija.reir()
-print(mi_hija.vocacion)
+mi_hija.trabajar()
 
 # Práctica Herencia Extendida 2
 # "El ornitorrinco es una de las criaturas más raras del mundo: aunque es un mamífero, pone huevos; y amamanta a sus crías pero no tienen mamas." (National Geographic)
